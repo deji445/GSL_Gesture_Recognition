@@ -4,8 +4,8 @@ import csv
 import os
 
 # ===== SETTINGS =====
-label = "Hello"   # change for each gesture
-samples = 100  # number of samples
+label = ""   # change for each gesture
+samples = 300 # number of samples
 
 # ====================
 

@@ -36,6 +36,8 @@ while True:
     rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
     result = hands.process(rgb)
 
+    display_text = ""
+
     if result.multi_hand_landmarks:
         for hand_landmarks in result.multi_hand_landmarks:
             row = []
@@ -53,6 +55,15 @@ while True:
             else:
                 confidence = 0
 
+            display_gesture = gesture.upper()
+
+            if display_gesture == "SPACE":
+                display_text = "[SPACE]"
+            elif display_gesture == "DELETE":
+                display_text = "[DELETE]"
+            else:
+                display_text = gesture
+
             current_time = time.time()
 
             if (
@@ -60,7 +71,13 @@ while True:
                 and gesture != last_prediction
                 and current_time - last_added_time >= delay_seconds
             ):
-                sentence += gesture
+                if display_gesture == "SPACE":
+                    sentence += " "
+                elif display_gesture == "DELETE":
+                    sentence = sentence[:-1]
+                else:
+                    sentence += gesture
+
                 last_prediction = gesture
                 last_added_time = current_time
 
@@ -72,7 +89,7 @@ while True:
 
             cv2.putText(
                 frame,
-                f"{gesture} ({confidence:.1f}%)",
+                f"{display_text} ({confidence:.1f}%)",
                 (10, 50),
                 cv2.FONT_HERSHEY_SIMPLEX,
                 1,
