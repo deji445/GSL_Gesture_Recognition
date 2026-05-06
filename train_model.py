@@ -3,7 +3,7 @@ import joblib
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import LabelEncoder
 from sklearn.ensemble import RandomForestClassifier
-from sklearn.metrics import accuracy_score
+from sklearn.metrics import accuracy_score, classification_report, confusion_matrix
 
 data = pd.read_csv("data.csv")
 
@@ -14,10 +14,18 @@ label_encoder = LabelEncoder()
 y_encoded = label_encoder.fit_transform(y)
 
 X_train, X_test, y_train, y_test = train_test_split(
-    X, y_encoded, test_size=0.2, random_state=42
+    X,
+    y_encoded,
+    test_size=0.2,
+    random_state=42,
+    stratify=y_encoded
 )
 
-model = RandomForestClassifier(n_estimators=100, random_state=42)
+model = RandomForestClassifier(
+    n_estimators=150,
+    random_state=42
+)
+
 model.fit(X_train, y_train)
 
 predictions = model.predict(X_test)
@@ -29,3 +37,13 @@ joblib.dump(label_encoder, "label_encoder.pkl")
 print("Model trained successfully!")
 print("Accuracy:", accuracy)
 print("Labels:", list(label_encoder.classes_))
+
+print("\nClassification Report:")
+print(classification_report(
+    y_test,
+    predictions,
+    target_names=label_encoder.classes_
+))
+
+print("\nConfusion Matrix:")
+print(confusion_matrix(y_test, predictions))
