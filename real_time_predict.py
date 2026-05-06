@@ -18,6 +18,9 @@ hands = mp_hands.Hands(
 
 cap = cv2.VideoCapture(0)
 
+sentence = ""
+last_prediction = ""
+
 while True:
     success, frame = cap.read()
 

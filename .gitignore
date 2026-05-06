@@ -1,0 +1,14 @@
+venv/
+.venv/
+__pycache__/
+*.pyc
+
+# optional large/generated files
+data.csv
+*.pkl
+*.h5
+*.keras
+
+.vscode/
+.DS_Store
+Thumbs.db
