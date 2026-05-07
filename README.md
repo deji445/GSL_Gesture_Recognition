@@ -83,4 +83,4 @@ The dataset consists of hand landmark coordinates captured using MediaPipe for d
 
 ## 👨‍💻 Author
 
-Kojo Baafi Botwe
+Damilola Tomisin AYodeji
